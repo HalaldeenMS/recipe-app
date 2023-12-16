@@ -1,7 +1,7 @@
-import { Box } from "@mui/material";
+
 import axios from "axios";
 import { useEffect , useState } from "react";
-import { boolean } from "yup";
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,12 +11,27 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 
+type Ingredient = {
+    ingredient : string,
+    description : string
+}
+
+type Recipe = {
+    id : number,
+    recipeTitle : string,
+    summary : string,
+    imageString : string,
+    steps : string,
+    ingredientList : Array<Ingredient>
+}
+
+
+
 export default function HomeRecipeCardDisplay ()
 {
 
     const [recipes , setRecipes] = useState([]);
-    var recipeList : Array<any> = []
-
+    
     useEffect(() => {
         axios
             .get("http://localhost:3000/recipes")
@@ -38,7 +53,7 @@ export default function HomeRecipeCardDisplay ()
         <Grid container spacing={2}>
             {
 
-                recipes.map(recipe =>
+                recipes.map((recipe : Recipe) =>
 
                     <Grid item xs={2} key={recipe.id} >
                         <Card sx={{ maxWidth: 345 }}>
